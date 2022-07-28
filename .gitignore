@@ -1,0 +1,7 @@
+*.class
+*.iml
+.idea
+.project
+bin
+/target
+rules-trace.log
