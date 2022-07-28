@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_0fr9mxs" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.0.0">
+  <bpmn:process id="sample-camunda-process" name="demoWorkflow" isExecutable="true" camunda:versionTag="0.1">
+    <bpmn:startEvent id="StartEvent_1" name="Start Event">
+      <bpmn:extensionElements />
+      <bpmn:outgoing>SequenceFlow_1fp17al</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_1fp17al" sourceRef="StartEvent_1" targetRef="Activity_0hwr7je" />
+    <bpmn:endEvent id="EndEvent_0x6ir2l" name="End Event">
+      <bpmn:incoming>Flow_1duoxrd</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:businessRuleTask id="TrueFalse" name="Check DMN File" camunda:resultVariable="bool" camunda:decisionRef="booleanDecisionRules" camunda:mapDecisionResult="singleEntry">
+      <bpmn:extensionElements />
+      <bpmn:incoming>Flow_1egnz8e</bpmn:incoming>
+      <bpmn:outgoing>Flow_1duoxrd</bpmn:outgoing>
+    </bpmn:businessRuleTask>
+    <bpmn:sequenceFlow id="Flow_1duoxrd" sourceRef="TrueFalse" targetRef="EndEvent_0x6ir2l" />
+    <bpmn:sequenceFlow id="Flow_1egnz8e" sourceRef="Activity_0hwr7je" targetRef="TrueFalse" />
+    <bpmn:serviceTask id="Activity_0hwr7je" name="Run Java Code" camunda:class="sample.camunda.CamundaDelegateExample">
+      <bpmn:extensionElements />
+      <bpmn:incoming>SequenceFlow_1fp17al</bpmn:incoming>
+      <bpmn:outgoing>Flow_1egnz8e</bpmn:outgoing>
+    </bpmn:serviceTask>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="sample-camunda-process">
+      <bpmndi:BPMNEdge id="SequenceFlow_1fp17al_di" bpmnElement="SequenceFlow_1fp17al">
+        <di:waypoint x="198" y="117" />
+        <di:waypoint x="520" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1egnz8e_di" bpmnElement="Flow_1egnz8e">
+        <di:waypoint x="620" y="117" />
+        <di:waypoint x="860" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1duoxrd_di" bpmnElement="Flow_1duoxrd">
+        <di:waypoint x="960" y="117" />
+        <di:waypoint x="1282" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="EndEvent_0x6ir2l_di" bpmnElement="EndEvent_0x6ir2l">
+        <dc:Bounds x="1282" y="99" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1275" y="142" width="51" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1r5dnfb_di" bpmnElement="Activity_0hwr7je">
+        <dc:Bounds x="520" y="77" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="162" y="99" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="153" y="142" width="55" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0imaxar_di" bpmnElement="TrueFalse">
+        <dc:Bounds x="860" y="77" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

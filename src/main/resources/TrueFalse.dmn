@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:biodi="http://bpmn.io/schema/dmn/biodi/2.0" id="trueFalse" name="Boolean Decision Rules" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.0.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.0.0">
+  <decision id="booleanDecisionRules" name="BooleanDecisionRules">
+    <decisionTable id="DecisionTable_02xaa7z" hitPolicy="FIRST">
+      <input id="Input_1" label="inputString" biodi:width="273">
+        <inputExpression id="InputExpression_1" typeRef="string">
+          <text></text>
+        </inputExpression>
+      </input>
+      <output id="Output_1" name="Boolean" typeRef="boolean" />
+      <rule id="DecisionRule_1ide451">
+        <inputEntry id="UnaryTests_0o7cs0l">
+          <text>"True"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0hhrv1t">
+          <text>true</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1r88gtk">
+        <inputEntry id="UnaryTests_1xr71du">
+          <text>"False"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1qlniiq">
+          <text>false</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram>
+      <dmndi:DMNShape dmnElementRef="booleanDecisionRules">
+        <dc:Bounds height="80" width="180" x="160" y="100" />
+      </dmndi:DMNShape>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>
