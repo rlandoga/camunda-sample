@@ -3,6 +3,8 @@ package sample.camunda;
 import java.util.HashMap;
 import java.util.Map;
 import org.camunda.bpm.engine.RuntimeService;
+import org.camunda.bpm.engine.rest.dto.VariableValueDto;
+import org.camunda.bpm.engine.runtime.ProcessInstanceWithVariables;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -15,8 +17,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class CamundaInputController {
 
+  //Used to start Camunda processes
   private RuntimeService runtimeService;
-  private CamundaInput camundaInput = new CamundaInput();
+  //Entity for what is being passed into Camunda
+  private final CamundaInput camundaInput = new CamundaInput();
 
   @Autowired
   public void PayloadRequest(RuntimeService runtimeService) {
@@ -25,33 +29,28 @@ public class CamundaInputController {
 
   @PostMapping("/test")
   public Boolean getBooleanFromInput(@RequestBody String userInput) {
-
-    /*TODO: Going to be passing a seralized object through our webservice, specific thing that ratings is sending
-    Serialized version of Rulefact class, gonna have to map that class to what camunda expects
-    call this endpoint, transform the object, call some sort of execute method to shoot off the process in camunda
-    assemble it in a way camunda understands and then send it
-    Map the resulting bool to the object
-    Step 1: How to fire off camunda from here - check, done
-    Step 2: How to map results from camunda in here
-    */
-
+    //Maps entity to what is sent to the Endpoint
     camundaInput.setUserInput(userInput);
 
+    //Creates Variables object to pass into Camunda
     Map<String, Object> variables = createVariables(camundaInput);
 
-    runtimeService.startProcessInstanceByKey("sample-camunda-process", variables);
+    //Creates an instance object that runs the process based on the Key, adds the Variables object for what is needed in the process,
+    // and returns all Variables created and updated in the process
+    ProcessInstanceWithVariables instance = runtimeService.createProcessInstanceByKey("sample-camunda-process").setVariables(variables).executeWithVariablesInReturn();
 
+    //Creates a map of the Variables from Camunda
+    Map<String, Object> result = instance.getVariables();
 
-    return true;
+    //Returns the specific variable that is created through the Decision table in Camunda as a test
+    return (Boolean) result.get("bool");
 
   }
 
+  //Creates Variables object that is then passed into Camunda proper
   private Map<String, Object> createVariables(CamundaInput input) {
     Map<String, Object> variables = new HashMap<>();
     variables.put("userInput", input.getUserInput());
-
-    //creates a null boolean object, want it to get set to whatever the camunda process sends back
-    variables.put("bool", input.getBool());
 
     return variables;
   }
